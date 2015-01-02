@@ -1,21 +1,37 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.restaurantroulette.app.lewisrhine.restaurantroulette.ListFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/whine_list"
-        android:scrollbars="vertical"
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        fab:type="ring">
 
-    <com.shamanland.fab.FloatingActionButton
-        android:id="@+id/rouletteButton"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/whine_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+        <!-- ListView、ScrollView、RecyclerView、Other -->
+
+    </com.baoyz.widget.PullRefreshLayout>
+
+
+    <com.getbase.floatingactionbutton.AddFloatingActionButton
+        android:id="@+id/spin_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        app:floatingActionButtonColor="#ff878785" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        fab:fab_colorNormal="#FFFFFF"
+        fab:fab_colorPressed="#FFFFFF"
+        fab:fab_plusIconColor="#ff000000" />
+
 
 </FrameLayout>

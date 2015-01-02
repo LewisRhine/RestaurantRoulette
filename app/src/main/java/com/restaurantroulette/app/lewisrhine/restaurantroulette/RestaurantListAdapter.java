@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.restaurantroulette.app.lewisrhine.restaurantroulette.yelpapi.*;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.ViewHolder>  {
     private Context context;
-    private ArrayList<Businesses> arrayList;
+    private ArrayList<com.restaurantroulette.app.lewisrhine.restaurantroulette.yelpapi.Businesses> list;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -48,9 +49,9 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RestaurantListAdapter(Context context, ArrayList<Businesses> arrayList) {
+    public RestaurantListAdapter(Context context, ArrayList list) {
             this.context = context;
-            this.arrayList = arrayList;
+            this.list = list;
     }
 
     // Create new views (invoked by the layout manager)
@@ -73,17 +74,17 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Picasso.with(context).load(arrayList.get(position).getImage_url()).into(holder.imageView);
-        holder.name_text.setText(arrayList.get(position).getName());
-        holder.distance_text.setText(arrayList.get(position).getDistance());
-        holder.categories_text.setText(arrayList.get(position).getCategories());
-        Picasso.with(context).load(arrayList.get(position).getRating_image_url()).into(holder.rating_image);
+        Picasso.with(context).load(list.get(position).getImage_url()).into(holder.imageView);
+        holder.name_text.setText(list.get(position).getName());
+        holder.distance_text.setText(list.get(position).getDistanceMiles().toString());
+        holder.categories_text.setText(list.get(position).getCategoryReadable());
+        Picasso.with(context).load(list.get(position).getRating_img_url()).into(holder.rating_image);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return list.size();
     }
 }
 

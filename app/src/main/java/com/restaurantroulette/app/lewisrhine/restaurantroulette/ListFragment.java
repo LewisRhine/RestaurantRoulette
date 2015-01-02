@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.shamanland.fab.FloatingActionButton;
+import com.baoyz.widget.PullRefreshLayout;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 
 /**
@@ -33,7 +35,7 @@ public class ListFragment extends Fragment {
     private RecyclerView whineListView;
 
     private OnFragmentInteractionListener mListener;
-
+    private PullRefreshLayout layout;
 
     /**
      * Use this factory method to create a new instance of
@@ -79,16 +81,32 @@ public class ListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         whineListView.setLayoutManager(layoutManager);
 
-        FloatingActionButton rouletteButton = (FloatingActionButton) rootView.findViewById(R.id.rouletteButton);
-        rouletteButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton spinButton = (FloatingActionButton) rootView.findViewById(R.id.spin_fab);
+        spinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onRouletteButtonClicked();
+                mListener.onSpinButtonClicked();
             }
         });
 
+        layout = (PullRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+
+// listen refresh event
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // start refresh
+                mListener.onListRefresh();
+            }
+        });
+
+// refresh complete
 
         return rootView;
+    }
+
+    public void stopRefresh(){
+        layout.setRefreshing(false);
     }
 
     @Override
@@ -119,6 +137,8 @@ public class ListFragment extends Fragment {
 
     public void setListAdapter(RestaurantListAdapter whineListAdapter){
         whineListView.setAdapter(whineListAdapter);
+        stopRefresh();
+
     }
 
 
@@ -136,7 +156,8 @@ public class ListFragment extends Fragment {
         public void onFragmentInteraction();
         public void onFragmentAttached();
         public void onFragmentStart();
-        public void onRouletteButtonClicked();
+        public void onListRefresh();
+        public void onSpinButtonClicked();
     }
 
 }

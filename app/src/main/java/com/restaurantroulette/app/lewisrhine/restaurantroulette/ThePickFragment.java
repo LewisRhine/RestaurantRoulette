@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -24,27 +27,20 @@ import android.widget.TextView;
 public class ThePickFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String NAME = "name";
+    private static final String IMAGEURL = "imageURL";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String name;
+    private String imageURL;
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment ThePickFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ThePickFragment newInstance(String param1) {
+    public static ThePickFragment newInstance(String name, String imageURL) {
         ThePickFragment fragment = new ThePickFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(NAME, name);
+        args.putString(IMAGEURL, imageURL);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +53,8 @@ public class ThePickFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            name = getArguments().getString(NAME);
+            imageURL = getArguments().getString(IMAGEURL);
         }
     }
 
@@ -71,10 +68,13 @@ public class ThePickFragment extends DialogFragment {
         getDialog().getWindow().setTitle("You're going to!");
 
         TextView pickName = (TextView) rootView.findViewById(R.id.pick_name);
-        if (mParam1 != null) {
-            pickName.setText(mParam1);
+        if (name != null) {
+            pickName.setText(name);
         }
-
+        ImageView pickImage = (ImageView) rootView.findViewById(R.id.pick_image);
+        if (imageURL != null){
+            Picasso.with(getActivity().getApplicationContext()).load(imageURL).into(pickImage);
+        }
 
         return rootView;
     }
